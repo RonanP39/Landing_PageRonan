@@ -31,7 +31,7 @@
   --disp:  'Syne', sans-serif;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;scroll-padding-top:80px}
+html{scroll-behavior:smooth;scroll-padding-top:110px}
 body{background:var(--bg);color:var(--text);font-family:var(--sans);overflow-x:hidden;cursor:none}
 
 /* ── CURSOR ── */
@@ -288,6 +288,7 @@ header.menu-open .hd-drawer{max-height:520px}
   height:100svh;min-height:600px;
   display:flex;
   overflow:hidden;position:relative;
+  padding-top:110px; /* top bar ~38px + main nav ~72px */
 }
 /* Left */
 .hero-l{
