@@ -31,7 +31,7 @@
   --disp:  'Syne', sans-serif;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;scroll-padding-top:110px}
+html{scroll-behavior:smooth;scroll-padding-top:140px}
 body{background:var(--bg);color:var(--text);font-family:var(--sans);overflow-x:hidden;cursor:none}
 
 /* ── CURSOR ── */
@@ -288,7 +288,7 @@ header.menu-open .hd-drawer{max-height:520px}
   height:100svh;min-height:600px;
   display:flex;
   overflow:hidden;position:relative;
-  padding-top:110px; /* top bar ~38px + main nav ~72px */
+  padding-top:140px;
 }
 /* Left */
 .hero-l{
@@ -305,7 +305,7 @@ header.menu-open .hd-drawer{max-height:520px}
   color:rgba(200,168,75,.03);white-space:nowrap;
   animation:tickL 25s linear infinite;
   user-select:none;pointer-events:none;
-  line-height:1;
+  line-height:1;z-index:0;
 }
 @keyframes tickL{from{transform:translateY(-50%) translateX(0)}to{transform:translateY(-50%) translateX(-50%)}}
 .hero-label{
