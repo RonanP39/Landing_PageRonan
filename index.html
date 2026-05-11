@@ -49,120 +49,236 @@ background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='htt
 @media(max-width:600px){.W{padding:0 20px}}
 
 /* ── NAV ── */
-/* ══ NAV ══ */
-nav{position:fixed;top:0;left:0;right:0;z-index:500;transition:all .45s cubic-bezier(.16,1,.3,1)}
-.nav-outer{padding:0;background:transparent;transition:all .45s}
-nav.on .nav-outer{background:rgba(5,5,8,.92);backdrop-filter:blur(24px) saturate(180%)}
-/* Top gold line — always visible */
-.nav-topline{height:2px;background:linear-gradient(90deg,transparent 0%,var(--gold) 30%,var(--gold2) 50%,var(--gold) 70%,transparent 100%);opacity:0;transition:opacity .4s}
-nav.on .nav-topline{opacity:1}
-.nav-inner-wrap{border-bottom:1px solid transparent;transition:border-color .45s}
-nav.on .nav-inner-wrap{border-bottom-color:var(--rim)}
-.nav-i{
-  display:grid;grid-template-columns:1fr auto 1fr;
-  align-items:center;padding:22px 0;
-  transition:padding .4s;
+/* ══════════════════════════════════════
+   HEADER — PREMIUM TWO-ROW
+══════════════════════════════════════ */
+header{
+  position:fixed;top:0;left:0;right:0;z-index:500;
+  transition:all .4s cubic-bezier(.16,1,.3,1);
 }
-nav.on .nav-i{padding:14px 0}
-
-/* Logo — center */
-.logo{
-  font-family:var(--serif);font-size:22px;font-weight:700;
-  letter-spacing:.5px;cursor:none;
-  display:flex;align-items:center;gap:2px;justify-content:center;
+/* Top bar */
+.hd-top{
+  background:var(--bg);
+  border-bottom:1px solid var(--rim);
+  padding:9px 0;
+  transition:all .4s;
 }
-.logo em{font-style:normal;color:var(--gold)}
-.logo-dot{width:5px;height:5px;border-radius:50%;background:var(--gold);margin:0 4px;animation:pulse 2.5s ease-in-out infinite}
-@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
-
-/* Links — left */
-.nav-links{display:flex;gap:32px;justify-content:flex-start}
-.nav-links a{
+header.scrolled .hd-top{display:none}
+.hd-top-inner{
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+}
+.hd-top-left{
+  display:flex;align-items:center;gap:20px;
+}
+.hd-top-left a{
+  display:flex;align-items:center;gap:7px;
   font-family:var(--disp);font-size:10px;font-weight:700;
-  letter-spacing:2.5px;text-transform:uppercase;color:var(--dim);
-  transition:color .2s;cursor:none;position:relative;padding-bottom:3px;
+  letter-spacing:1.5px;text-transform:uppercase;
+  color:var(--dim);transition:color .2s;cursor:none;
 }
-.nav-links a::after{
-  content:'';position:absolute;bottom:0;left:0;width:0;height:1px;
-  background:var(--gold);transition:width .3s cubic-bezier(.16,1,.3,1);
+.hd-top-left a:hover{color:var(--gold)}
+.hd-top-left a svg{width:13px;height:13px;flex-shrink:0;transition:color .2s}
+.hd-sep{width:1px;height:12px;background:var(--rim);flex-shrink:0}
+.hd-top-right{
+  display:flex;align-items:center;gap:14px;
 }
-.nav-links a:hover{color:var(--text)}
-.nav-links a:hover::after{width:100%}
+.hd-social{
+  display:flex;align-items:center;gap:8px;
+}
+.hd-soc{
+  display:flex;align-items:center;gap:6px;
+  font-family:var(--disp);font-size:10px;font-weight:700;
+  letter-spacing:1.5px;text-transform:uppercase;
+  color:var(--dim);transition:color .2s;cursor:none;
+  padding:4px 10px;border:1px solid var(--rim);border-radius:2px;
+  transition:all .2s;
+}
+.hd-soc:hover{color:var(--gold);border-color:var(--rim-gold);background:var(--au-bg)}
+.hd-soc svg{width:12px;height:12px;flex-shrink:0}
+.hd-available{
+  display:flex;align-items:center;gap:7px;
+  font-family:var(--disp);font-size:10px;font-weight:700;
+  letter-spacing:1.5px;text-transform:uppercase;
+  color:var(--dim);
+}
+.hd-avail-dot{
+  width:7px;height:7px;border-radius:50%;
+  background:#4CAF50;flex-shrink:0;
+  box-shadow:0 0 0 0 rgba(76,175,80,.4);
+  animation:availPulse 2s ease-in-out infinite;
+}
+@keyframes availPulse{
+  0%{box-shadow:0 0 0 0 rgba(76,175,80,.4)}
+  70%{box-shadow:0 0 0 6px rgba(76,175,80,0)}
+  100%{box-shadow:0 0 0 0 rgba(76,175,80,0)}
+}
+@media(max-width:768px){.hd-top{display:none}}
 
-/* CTA — right */
-.nav-cta{display:flex;align-items:center;gap:12px;justify-content:flex-end}
-.nav-badge{
-  font-family:var(--disp);font-size:9px;font-weight:700;letter-spacing:2px;
-  text-transform:uppercase;color:var(--dim);padding:5px 12px;
-  border:1px solid var(--rim);border-radius:100px;
-  display:none;
+/* Main nav bar */
+.hd-main{
+  background:rgba(5,5,8,0);
+  backdrop-filter:blur(0px);
+  border-bottom:1px solid transparent;
+  transition:all .4s cubic-bezier(.16,1,.3,1);
 }
-nav.on .nav-badge{display:block}
-.nav-btn{
-  font-family:var(--disp);font-size:10px;font-weight:700;letter-spacing:2px;
-  text-transform:uppercase;background:var(--gold);color:var(--bg);
-  padding:13px 28px;border-radius:2px;cursor:none;
-  transition:all .25s;position:relative;overflow:hidden;border:none;
-  white-space:nowrap;
+header.scrolled .hd-main{
+  background:rgba(5,5,8,.95);
+  backdrop-filter:blur(24px) saturate(180%);
+  border-bottom-color:var(--rim);
+  box-shadow:0 1px 0 rgba(200,168,75,.08),0 8px 32px rgba(0,0,0,.4);
 }
-.nav-btn::before{
+/* Gold accent line under nav on scroll */
+.hd-main::after{
+  content:'';position:absolute;bottom:-2px;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  opacity:0;transition:opacity .4s;pointer-events:none;
+}
+header.scrolled .hd-main::after{opacity:.4}
+.hd-main-inner{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:18px 0;transition:padding .4s;
+  position:relative;
+}
+header.scrolled .hd-main-inner{padding:13px 0}
+
+/* Logo */
+.hd-logo{
+  display:flex;align-items:center;gap:10px;cursor:none;
+  text-decoration:none;
+}
+.hd-logo-mark{
+  width:38px;height:38px;border-radius:6px;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--serif);font-size:16px;font-weight:900;color:var(--bg);
+  flex-shrink:0;transition:transform .3s,box-shadow .3s;
+}
+.hd-logo:hover .hd-logo-mark{transform:rotate(-3deg);box-shadow:0 8px 24px rgba(200,168,75,.4)}
+.hd-logo-text{display:flex;flex-direction:column;gap:1px}
+.hd-logo-name{
+  font-family:var(--serif);font-size:17px;font-weight:700;
+  letter-spacing:.3px;line-height:1;color:var(--text);
+}
+.hd-logo-name em{font-style:normal;color:var(--gold)}
+.hd-logo-tag{
+  font-family:var(--disp);font-size:8px;font-weight:700;
+  letter-spacing:2.5px;text-transform:uppercase;color:var(--dim2);
+}
+
+/* Nav links */
+.hd-links{display:flex;align-items:center;gap:6px;}
+.hd-links a{
+  font-family:var(--disp);font-size:10px;font-weight:700;
+  letter-spacing:2px;text-transform:uppercase;color:var(--dim);
+  padding:8px 14px;border-radius:3px;
+  transition:all .2s;cursor:none;
+  position:relative;
+}
+.hd-links a:hover{color:var(--text);background:rgba(255,255,255,.04)}
+.hd-links a.active{color:var(--gold)}
+
+/* Right group */
+.hd-right{display:flex;align-items:center;gap:10px}
+.hd-right-soc{
+  display:flex;align-items:center;gap:6px;
+  margin-right:4px;
+}
+.hd-right-soc a{
+  width:34px;height:34px;
+  display:flex;align-items:center;justify-content:center;
+  border:1px solid var(--rim);border-radius:4px;
+  transition:all .25s;cursor:none;
+  color:var(--dim);
+}
+.hd-right-soc a:hover{border-color:var(--rim-gold);background:var(--au-bg);color:var(--gold)}
+.hd-right-soc svg{width:14px;height:14px}
+.hd-divider{width:1px;height:24px;background:var(--rim);flex-shrink:0}
+.hd-cta{
+  font-family:var(--disp);font-size:10px;font-weight:700;
+  letter-spacing:2px;text-transform:uppercase;
+  background:var(--gold);color:var(--bg);
+  padding:12px 24px;border-radius:3px;
+  border:none;cursor:none;white-space:nowrap;
+  transition:all .28s;position:relative;overflow:hidden;
+}
+.hd-cta::before{
   content:'';position:absolute;inset:0;
-  background:linear-gradient(110deg,transparent 40%,rgba(255,255,255,.2) 50%,transparent 60%);
+  background:linear-gradient(110deg,transparent 40%,rgba(255,255,255,.22) 50%,transparent 60%);
   transform:translateX(-100%);transition:transform .6s;
 }
-.nav-btn:hover{background:var(--gold2);transform:translateY(-2px);box-shadow:0 10px 32px rgba(200,168,75,.35)}
-.nav-btn:hover::before{transform:translateX(120%)}
+.hd-cta:hover{background:var(--gold2);transform:translateY(-2px);box-shadow:0 10px 30px rgba(200,168,75,.4)}
+.hd-cta:hover::before{transform:translateX(120%)}
 
-/* Mobile hamburger */
-.nav-ham{
-  display:none;flex-direction:column;gap:5px;cursor:none;
-  padding:8px;border:1px solid var(--rim);border-radius:4px;
-  background:transparent;transition:border-color .2s;
+/* Hamburger */
+.hd-ham{
+  display:none;flex-direction:column;gap:5px;
+  padding:9px;border:1px solid var(--rim);border-radius:4px;
+  background:transparent;transition:border-color .2s;cursor:none;
 }
-.nav-ham:hover{border-color:var(--rim-gold)}
-.ham-line{width:22px;height:1.5px;background:var(--text);transition:all .3s;display:block}
-nav.menu-open .ham-line:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
-nav.menu-open .ham-line:nth-child(2){opacity:0;transform:translateX(-8px)}
-nav.menu-open .ham-line:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+.hd-ham:hover{border-color:var(--rim-gold)}
+.hd-ham span{
+  display:block;width:20px;height:1.5px;
+  background:var(--text);transition:all .3s;
+}
+header.menu-open .hd-ham span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+header.menu-open .hd-ham span:nth-child(2){opacity:0;transform:translateX(-6px)}
+header.menu-open .hd-ham span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
 
 /* Mobile drawer */
-.nav-drawer{
-  display:none;
-  flex-direction:column;gap:0;
-  background:rgba(5,5,8,.97);backdrop-filter:blur(24px);
+.hd-drawer{
+  background:rgba(5,5,8,.98);
+  backdrop-filter:blur(28px);
   border-top:1px solid var(--rim);
   max-height:0;overflow:hidden;
   transition:max-height .45s cubic-bezier(.16,1,.3,1);
 }
-nav.menu-open .nav-drawer{max-height:400px}
-.nav-drawer a{
-  font-family:var(--disp);font-size:11px;font-weight:700;letter-spacing:2.5px;
-  text-transform:uppercase;color:var(--dim);
-  padding:18px 24px;border-bottom:1px solid var(--rim);
+header.menu-open .hd-drawer{max-height:520px}
+.hd-drawer-links{padding:8px 0}
+.hd-drawer-links a{
+  display:flex;align-items:center;justify-content:space-between;
+  font-family:var(--disp);font-size:11px;font-weight:700;
+  letter-spacing:2.5px;text-transform:uppercase;
+  color:var(--dim);padding:16px 24px;
+  border-bottom:1px solid var(--rim);
   transition:color .2s,background .2s;cursor:none;
-  display:block;
 }
-.nav-drawer a:hover{color:var(--gold);background:rgba(200,168,75,.04)}
-.nav-drawer .nav-drawer-cta{
-  margin:16px 24px 20px;
+.hd-drawer-links a:hover{color:var(--text);background:rgba(255,255,255,.02)}
+.hd-drawer-links a::after{content:'→';color:var(--dim2);font-size:14px}
+.hd-drawer-socials{
+  display:flex;gap:12px;padding:20px 24px;
+  border-bottom:1px solid var(--rim);
+}
+.hd-drawer-socials a{
+  display:flex;align-items:center;gap:8px;
+  font-family:var(--disp);font-size:10px;font-weight:700;letter-spacing:1.5px;
+  text-transform:uppercase;color:var(--dim);
+  padding:10px 16px;border:1px solid var(--rim);border-radius:3px;
+  transition:all .2s;cursor:none;
+}
+.hd-drawer-socials a:hover{color:var(--gold);border-color:var(--rim-gold)}
+.hd-drawer-socials svg{width:14px;height:14px;flex-shrink:0}
+.hd-drawer-cta-wrap{padding:20px 24px}
+.hd-drawer-cta{
+  display:block;text-align:center;
+  font-family:var(--disp);font-size:11px;font-weight:700;
+  letter-spacing:2px;text-transform:uppercase;
   background:var(--gold);color:var(--bg);
-  text-align:center;border-radius:2px;border-bottom:none;
-  padding:14px;
+  padding:16px;border-radius:3px;
+  transition:background .2s;cursor:none;
 }
-.nav-drawer .nav-drawer-cta:hover{background:var(--gold2)}
+.hd-drawer-cta:hover{background:var(--gold2)}
 
 @media(max-width:900px){
-  .nav-links{display:none}
-  .nav-badge{display:none!important}
-  .nav-i{grid-template-columns:1fr auto}
-  .logo{justify-content:flex-start}
-  .nav-ham{display:flex}
-  .nav-cta .nav-btn{display:none}
-  .nav-drawer{display:flex}
+  .hd-links{display:none}
+  .hd-right-soc{display:none}
+  .hd-divider{display:none}
+  .hd-ham{display:flex}
+  .hd-cta{display:none}
 }
 @media(max-width:480px){
-  .nav-i{padding:16px 0}
-  nav.on .nav-i{padding:12px 0}
+  .hd-main-inner{padding:14px 0}
+  header.scrolled .hd-main-inner{padding:10px 0}
+  .hd-logo-mark{width:32px;height:32px;font-size:13px}
 }
 
 /* ════════════════════════════
@@ -565,44 +681,108 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
   <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.136.558 4.14 1.535 5.874L0 24l6.29-1.508A11.934 11.934 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.007-1.37l-.36-.213-3.732.894.942-3.641-.234-.374A9.818 9.818 0 1112 21.818z"/></svg>
 </a>
 
-<!-- NAV -->
-<nav id="nav">
-  <div class="nav-topline"></div>
-  <div class="nav-inner-wrap">
+
+<!-- HEADER -->
+<header id="nav">
+  <!-- Top info bar -->
+  <div class="hd-top">
+    <div class="W hd-top-inner">
+      <div class="hd-top-left">
+        <a href="mailto:ronanfp34@gmail.com">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/></svg>
+          ronanfp34@gmail.com
+        </a>
+        <div class="hd-sep"></div>
+        <a href="https://wa.me/5516981044494" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.136.558 4.14 1.535 5.874L0 24l6.29-1.508A11.934 11.934 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.007-1.37l-.36-.213-3.732.894.942-3.641-.234-.374A9.818 9.818 0 1112 21.818z"/></svg>
+          +55 (16) 98104-4494
+        </a>
+      </div>
+      <div class="hd-top-right">
+        <div class="hd-available">
+          <span class="hd-avail-dot"></span>
+          Disponível para projetos
+        </div>
+        <div class="hd-sep"></div>
+        <div class="hd-social">
+          <a href="https://instagram.com/ron.an35" target="_blank" rel="noopener" class="hd-soc">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+            Instagram
+          </a>
+          <a href="https://github.com/RonanP39" target="_blank" rel="noopener" class="hd-soc">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+            GitHub
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main nav -->
+  <div class="hd-main">
     <div class="W">
-      <div class="nav-i">
-        <!-- Links left -->
-        <div class="nav-links">
+      <div class="hd-main-inner">
+        <!-- Logo -->
+        <a href="#" class="hd-logo">
+          <div class="hd-logo-mark">R</div>
+          <div class="hd-logo-text">
+            <span class="hd-logo-name">Ronan<em>/</em>DEV</span>
+            <span class="hd-logo-tag">Web Premium Studio</span>
+          </div>
+        </a>
+        <!-- Links -->
+        <nav class="hd-links">
           <a href="#sobre">Sobre</a>
           <a href="#servicos">Serviços</a>
           <a href="#resultados">Cases</a>
           <a href="#planos">Planos</a>
-        </div>
-        <!-- Logo center -->
-        <a href="#" class="logo">Ronan<span class="logo-dot"></span><em>DEV</em></a>
-        <!-- CTA right -->
-        <div class="nav-cta">
-          <span class="nav-badge">+130 projetos</span>
-          <a href="https://wa.me/5516981044494?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20gostaria%20de%20um%20or%C3%A7amento." target="_blank" rel="noopener" class="nav-btn">Orçamento grátis →</a>
-          <button class="nav-ham" id="navHam" aria-label="Menu">
-            <span class="ham-line"></span>
-            <span class="ham-line"></span>
-            <span class="ham-line"></span>
+          <a href="#feedback">Depoimentos</a>
+        </nav>
+        <!-- Right -->
+        <div class="hd-right">
+          <div class="hd-right-soc">
+            <a href="https://instagram.com/ron.an35" target="_blank" rel="noopener" title="Instagram">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+            </a>
+            <a href="https://github.com/RonanP39" target="_blank" rel="noopener" title="GitHub">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+            </a>
+          </div>
+          <div class="hd-divider"></div>
+          <a href="https://wa.me/5516981044494?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20gostaria%20de%20um%20or%C3%A7amento." target="_blank" rel="noopener" class="hd-cta">Orçamento grátis →</a>
+          <button class="hd-ham" id="navHam" aria-label="Menu">
+            <span></span><span></span><span></span>
           </button>
         </div>
       </div>
     </div>
   </div>
+
   <!-- Mobile drawer -->
-  <div class="nav-drawer" id="navDrawer">
-    <a href="#sobre" onclick="closeMenu()">Sobre</a>
-    <a href="#servicos" onclick="closeMenu()">Serviços</a>
-    <a href="#resultados" onclick="closeMenu()">Cases</a>
-    <a href="#planos" onclick="closeMenu()">Planos</a>
-    <a href="#feedback" onclick="closeMenu()">Depoimentos</a>
-    <a href="https://wa.me/5516981044494?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20gostaria%20de%20um%20or%C3%A7amento." target="_blank" rel="noopener" class="nav-drawer-cta">Orçamento grátis →</a>
+  <div class="hd-drawer" id="navDrawer">
+    <div class="hd-drawer-links">
+      <a href="#sobre" onclick="closeMenu()">Sobre</a>
+      <a href="#servicos" onclick="closeMenu()">Serviços</a>
+      <a href="#resultados" onclick="closeMenu()">Cases</a>
+      <a href="#planos" onclick="closeMenu()">Planos</a>
+      <a href="#feedback" onclick="closeMenu()">Depoimentos</a>
+    </div>
+    <div class="hd-drawer-socials">
+      <a href="https://instagram.com/ron.an35" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+        @ron.an35
+      </a>
+      <a href="https://github.com/RonanP39" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+        RonanP39
+      </a>
+    </div>
+    <div class="hd-drawer-cta-wrap">
+      <a href="https://wa.me/5516981044494?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20gostaria%20de%20um%20or%C3%A7amento." target="_blank" rel="noopener" class="hd-drawer-cta">Orçamento grátis →</a>
+    </div>
   </div>
-</nav>
+</header>
+
 
 <!-- HERO -->
 <section class="hero">
@@ -1235,16 +1415,13 @@ document.querySelectorAll('a,button,.btn-prim,.btn-sec,.nav-btn,.srv-item').forE
   el.addEventListener('mouseleave',()=>{c.style.width='8px';c.style.height='8px';r.style.width='32px';r.style.height='32px';});
 });
 
-/* Nav */
+/* Nav / Header */
 const nav=document.getElementById('nav');
-window.addEventListener('scroll',()=>nav.classList.toggle('on',scrollY>60),{passive:true});
-
-/* Hamburger */
+window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>60),{passive:true});
 const ham=document.getElementById('navHam');
 ham&&ham.addEventListener('click',()=>nav.classList.toggle('menu-open'));
-function closeMenu(){{nav.classList.remove('menu-open')}}
-// Close on outside click
-document.addEventListener('click',e=>{{if(!nav.contains(e.target))nav.classList.remove('menu-open')}});
+function closeMenu(){nav.classList.remove('menu-open')}
+document.addEventListener('click',e=>{if(!nav.contains(e.target))nav.classList.remove('menu-open')});
 
 /* Reveal */
 const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}}),{threshold:.08,rootMargin:'0px 0px -40px 0px'});
