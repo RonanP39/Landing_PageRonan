@@ -662,6 +662,13 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 .reveal.visible{opacity:1;transform:none}
 .d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}.d4{transition-delay:.4s}
 
+/* COUNTER */
+.kpi--counter{position:relative}
+.counter-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#4CAF50;margin-right:5px;vertical-align:middle;box-shadow:0 0 0 0 rgba(76,175,80,.4);animation:cPulse 2s ease-in-out infinite}
+@keyframes cPulse{0%{box-shadow:0 0 0 0 rgba(76,175,80,.4)}70%{box-shadow:0 0 0 6px rgba(76,175,80,0)}100%{box-shadow:0 0 0 0 rgba(76,175,80,0)}}
+@keyframes countUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+#viewCount{animation:countUp .6s .4s ease both}
+
 /* SECTION TITLES */
 .sec-label{display:inline-flex;align-items:center;gap:8px;font-family:var(--disp);font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);padding:7px 16px;border:1px solid rgba(200,168,75,.2);background:rgba(200,168,75,.06);border-radius:2px;margin-bottom:20px;position:relative;overflow:hidden}
 .sec-label::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(200,168,75,.1),transparent);animation:shimmer 3s ease infinite}
@@ -802,6 +809,12 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
       <div class="kpi"><span class="kpi-v">+130</span><span class="kpi-l">Projetos</span></div>
       <div class="kpi"><span class="kpi-v">4.9★</span><span class="kpi-l">Avaliação</span></div>
       <div class="kpi"><span class="kpi-v">3×</span><span class="kpi-l">Mais leads</span></div>
+      <div class="kpi kpi--counter">
+        <span class="kpi-v" id="viewCount">—</span>
+        <span class="kpi-l">
+          <span class="counter-dot"></span>Visualizações
+        </span>
+      </div>
     </div>
   </div></section>
 
@@ -1503,6 +1516,27 @@ function submitFeedback(){
   document.getElementById('fbOk').classList.add('on');
   setTimeout(()=>card.scrollIntoView({behavior:'smooth',block:'center'}),350);
 }
+
+/* ── Page view counter (CountAPI) ── */
+(async function(){
+  try{
+    const r = await fetch('https://api.countapi.xyz/hit/rpereiradev.com/pageviews');
+    const d = await r.json();
+    const el = document.getElementById('viewCount');
+    if(!el||!d.value) return;
+    const target=d.value, start=Math.max(0,target-Math.min(target,80));
+    const t0=performance.now();
+    (function tick(now){
+      const p=Math.min((now-t0)/1200,1), e=1-Math.pow(1-p,3);
+      const v=Math.round(start+(target-start)*e);
+      el.textContent=v>=1000?(v/1000).toFixed(1).replace('.',',')+' mil':v.toLocaleString('pt-BR');
+      if(p<1) requestAnimationFrame(tick);
+    })(t0);
+  }catch(e){
+    const el=document.getElementById('viewCount');
+    if(el) el.textContent='—';
+  }
+})();
 </script>
 </body>
 </html>
