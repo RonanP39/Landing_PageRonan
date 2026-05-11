@@ -49,21 +49,121 @@ background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='htt
 @media(max-width:600px){.W{padding:0 20px}}
 
 /* ── NAV ── */
-nav{position:fixed;top:0;left:0;right:0;z-index:500;padding:20px 0;transition:all .4s}
-nav.on{background:rgba(5,5,8,.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--rim);padding:14px 0}
-.nav-i{display:flex;align-items:center;justify-content:space-between}
-.logo{font-family:var(--serif);font-size:18px;font-weight:700;letter-spacing:.3px;cursor:none}
+/* ══ NAV ══ */
+nav{position:fixed;top:0;left:0;right:0;z-index:500;transition:all .45s cubic-bezier(.16,1,.3,1)}
+.nav-outer{padding:0;background:transparent;transition:all .45s}
+nav.on .nav-outer{background:rgba(5,5,8,.92);backdrop-filter:blur(24px) saturate(180%)}
+/* Top gold line — always visible */
+.nav-topline{height:2px;background:linear-gradient(90deg,transparent 0%,var(--gold) 30%,var(--gold2) 50%,var(--gold) 70%,transparent 100%);opacity:0;transition:opacity .4s}
+nav.on .nav-topline{opacity:1}
+.nav-inner-wrap{border-bottom:1px solid transparent;transition:border-color .45s}
+nav.on .nav-inner-wrap{border-bottom-color:var(--rim)}
+.nav-i{
+  display:grid;grid-template-columns:1fr auto 1fr;
+  align-items:center;padding:22px 0;
+  transition:padding .4s;
+}
+nav.on .nav-i{padding:14px 0}
+
+/* Logo — center */
+.logo{
+  font-family:var(--serif);font-size:22px;font-weight:700;
+  letter-spacing:.5px;cursor:none;
+  display:flex;align-items:center;gap:2px;justify-content:center;
+}
 .logo em{font-style:normal;color:var(--gold)}
-.nav-links{display:flex;gap:36px}
-.nav-links a{font-size:12px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--dim);transition:color .2s;cursor:none}
+.logo-dot{width:5px;height:5px;border-radius:50%;background:var(--gold);margin:0 4px;animation:pulse 2.5s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
+
+/* Links — left */
+.nav-links{display:flex;gap:32px;justify-content:flex-start}
+.nav-links a{
+  font-family:var(--disp);font-size:10px;font-weight:700;
+  letter-spacing:2.5px;text-transform:uppercase;color:var(--dim);
+  transition:color .2s;cursor:none;position:relative;padding-bottom:3px;
+}
+.nav-links a::after{
+  content:'';position:absolute;bottom:0;left:0;width:0;height:1px;
+  background:var(--gold);transition:width .3s cubic-bezier(.16,1,.3,1);
+}
 .nav-links a:hover{color:var(--text)}
-.nav-btn{font-family:var(--disp);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
-  background:var(--gold);color:var(--bg);padding:12px 28px;border-radius:2px;cursor:none;
-  transition:all .25s;position:relative;overflow:hidden;border:none}
-.nav-btn::after{content:'';position:absolute;inset:0;background:linear-gradient(110deg,transparent 40%,rgba(255,255,255,.2) 50%,transparent 60%);transform:translateX(-100%);transition:transform .6s}
-.nav-btn:hover{background:var(--gold2);transform:translateY(-1px);box-shadow:0 8px 28px rgba(200,168,75,.3)}
-.nav-btn:hover::after{transform:translateX(120%)}
-@media(max-width:900px){.nav-links{display:none}}
+.nav-links a:hover::after{width:100%}
+
+/* CTA — right */
+.nav-cta{display:flex;align-items:center;gap:12px;justify-content:flex-end}
+.nav-badge{
+  font-family:var(--disp);font-size:9px;font-weight:700;letter-spacing:2px;
+  text-transform:uppercase;color:var(--dim);padding:5px 12px;
+  border:1px solid var(--rim);border-radius:100px;
+  display:none;
+}
+nav.on .nav-badge{display:block}
+.nav-btn{
+  font-family:var(--disp);font-size:10px;font-weight:700;letter-spacing:2px;
+  text-transform:uppercase;background:var(--gold);color:var(--bg);
+  padding:13px 28px;border-radius:2px;cursor:none;
+  transition:all .25s;position:relative;overflow:hidden;border:none;
+  white-space:nowrap;
+}
+.nav-btn::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(110deg,transparent 40%,rgba(255,255,255,.2) 50%,transparent 60%);
+  transform:translateX(-100%);transition:transform .6s;
+}
+.nav-btn:hover{background:var(--gold2);transform:translateY(-2px);box-shadow:0 10px 32px rgba(200,168,75,.35)}
+.nav-btn:hover::before{transform:translateX(120%)}
+
+/* Mobile hamburger */
+.nav-ham{
+  display:none;flex-direction:column;gap:5px;cursor:none;
+  padding:8px;border:1px solid var(--rim);border-radius:4px;
+  background:transparent;transition:border-color .2s;
+}
+.nav-ham:hover{border-color:var(--rim-gold)}
+.ham-line{width:22px;height:1.5px;background:var(--text);transition:all .3s;display:block}
+nav.menu-open .ham-line:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+nav.menu-open .ham-line:nth-child(2){opacity:0;transform:translateX(-8px)}
+nav.menu-open .ham-line:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+
+/* Mobile drawer */
+.nav-drawer{
+  display:none;
+  flex-direction:column;gap:0;
+  background:rgba(5,5,8,.97);backdrop-filter:blur(24px);
+  border-top:1px solid var(--rim);
+  max-height:0;overflow:hidden;
+  transition:max-height .45s cubic-bezier(.16,1,.3,1);
+}
+nav.menu-open .nav-drawer{max-height:400px}
+.nav-drawer a{
+  font-family:var(--disp);font-size:11px;font-weight:700;letter-spacing:2.5px;
+  text-transform:uppercase;color:var(--dim);
+  padding:18px 24px;border-bottom:1px solid var(--rim);
+  transition:color .2s,background .2s;cursor:none;
+  display:block;
+}
+.nav-drawer a:hover{color:var(--gold);background:rgba(200,168,75,.04)}
+.nav-drawer .nav-drawer-cta{
+  margin:16px 24px 20px;
+  background:var(--gold);color:var(--bg);
+  text-align:center;border-radius:2px;border-bottom:none;
+  padding:14px;
+}
+.nav-drawer .nav-drawer-cta:hover{background:var(--gold2)}
+
+@media(max-width:900px){
+  .nav-links{display:none}
+  .nav-badge{display:none!important}
+  .nav-i{grid-template-columns:1fr auto}
+  .logo{justify-content:flex-start}
+  .nav-ham{display:flex}
+  .nav-cta .nav-btn{display:none}
+  .nav-drawer{display:flex}
+}
+@media(max-width:480px){
+  .nav-i{padding:16px 0}
+  nav.on .nav-i{padding:12px 0}
+}
 
 /* ════════════════════════════
    HERO — FULLSCREEN SPLIT
@@ -467,16 +567,40 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 
 <!-- NAV -->
 <nav id="nav">
-  <div class="W nav-i">
-    <a href="#" class="logo">Ronan<em>/</em>DEV</a>
-    <div class="nav-links">
-      <a href="#sobre">Sobre</a>
-      <a href="#servicos">Serviços</a>
-      <a href="#resultados">Cases</a>
-      <a href="#planos">Planos</a>
-      <a href="#feedback">Depoimentos</a>
+  <div class="nav-topline"></div>
+  <div class="nav-inner-wrap">
+    <div class="W">
+      <div class="nav-i">
+        <!-- Links left -->
+        <div class="nav-links">
+          <a href="#sobre">Sobre</a>
+          <a href="#servicos">Serviços</a>
+          <a href="#resultados">Cases</a>
+          <a href="#planos">Planos</a>
+        </div>
+        <!-- Logo center -->
+        <a href="#" class="logo">Ronan<span class="logo-dot"></span><em>DEV</em></a>
+        <!-- CTA right -->
+        <div class="nav-cta">
+          <span class="nav-badge">+130 projetos</span>
+          <a href="https://wa.me/5516981044494?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20gostaria%20de%20um%20or%C3%A7amento." target="_blank" rel="noopener" class="nav-btn">Orçamento grátis →</a>
+          <button class="nav-ham" id="navHam" aria-label="Menu">
+            <span class="ham-line"></span>
+            <span class="ham-line"></span>
+            <span class="ham-line"></span>
+          </button>
+        </div>
+      </div>
     </div>
-    <a href="https://wa.me/5516981044494?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20gostaria%20de%20um%20or%C3%A7amento." target="_blank" rel="noopener" class="nav-btn">Orçamento grátis</a>
+  </div>
+  <!-- Mobile drawer -->
+  <div class="nav-drawer" id="navDrawer">
+    <a href="#sobre" onclick="closeMenu()">Sobre</a>
+    <a href="#servicos" onclick="closeMenu()">Serviços</a>
+    <a href="#resultados" onclick="closeMenu()">Cases</a>
+    <a href="#planos" onclick="closeMenu()">Planos</a>
+    <a href="#feedback" onclick="closeMenu()">Depoimentos</a>
+    <a href="https://wa.me/5516981044494?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20gostaria%20de%20um%20or%C3%A7amento." target="_blank" rel="noopener" class="nav-drawer-cta">Orçamento grátis →</a>
   </div>
 </nav>
 
@@ -1114,6 +1238,13 @@ document.querySelectorAll('a,button,.btn-prim,.btn-sec,.nav-btn,.srv-item').forE
 /* Nav */
 const nav=document.getElementById('nav');
 window.addEventListener('scroll',()=>nav.classList.toggle('on',scrollY>60),{passive:true});
+
+/* Hamburger */
+const ham=document.getElementById('navHam');
+ham&&ham.addEventListener('click',()=>nav.classList.toggle('menu-open'));
+function closeMenu(){{nav.classList.remove('menu-open')}}
+// Close on outside click
+document.addEventListener('click',e=>{{if(!nav.contains(e.target))nav.classList.remove('menu-open')}});
 
 /* Reveal */
 const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}}),{threshold:.08,rootMargin:'0px 0px -40px 0px'});
