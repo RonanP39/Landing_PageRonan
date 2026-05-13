@@ -720,23 +720,23 @@ body::before{
   <section class="sec hero" id="inicio">
     <div class="hero-bg-num">DEV</div>
     <div class="hero-inner">
-      <div class="hero-badge reveal">
+      <div class="hero-badge">
         <span class="hero-badge-dot"></span>
         Disponível para novos projetos
       </div>
-      <h1 class="hero-h reveal d1">
+      <h1 class="hero-h">
         <span class="line-solid">Sites que</span>
         <span class="line-gold">convertem</span>
         <span class="line-solid">de verdade.</span>
       </h1>
-      <p class="hero-sub reveal d2">
+      <p class="hero-sub">
         Landing pages, sites corporativos e dashboards de alta conversão — com <strong>copy estratégico incluso</strong> — para médicos, imobiliárias e advogados.
       </p>
-      <div class="hero-btns reveal d3">
+      <div class="hero-btns">
         <a href="https://wa.me/5516981044494?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20gostaria%20de%20um%20or%C3%A7amento." target="_blank" rel="noopener" class="btn btn-gold">Solicitar orçamento →</a>
         <a href="#sobre" class="btn btn-outline">Ver meu trabalho</a>
       </div>
-      <div class="hero-kpis reveal d4">
+      <div class="hero-kpis">
         <div class="hkpi">
           <span class="hkpi-v">+130</span>
           <span class="hkpi-l">Projetos</span>
@@ -1143,6 +1143,9 @@ const io = new IntersectionObserver(entries=>entries.forEach(e=>{
   if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}
 }),{threshold:0,rootMargin:'200px'});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* Safety fallback: show all reveals after 800ms */
+setTimeout(()=>document.querySelectorAll('.reveal:not(.visible)').forEach(el=>el.classList.add('visible')), 800);
 
 /* ── Progress bars ── */
 const progObs = new IntersectionObserver(entries=>entries.forEach(e=>{
