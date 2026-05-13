@@ -748,13 +748,6 @@ body::before{
           <span class="hkpi-v">3×</span>
           <span class="hkpi-l">Mais leads</span>
         </div>
-        <div class="hkpi">
-          <span class="hkpi-v" id="viewCount" style="font-size:28px">—</span>
-          <span class="hkpi-l" style="display:flex;align-items:center;gap:5px">
-            <span style="width:6px;height:6px;border-radius:50%;background:#22C55E;display:inline-block;animation:pulse 2s ease-in-out infinite;flex-shrink:0"></span>
-            Views
-          </span>
-        </div>
       </div>
     </div>
   </section>
@@ -1232,19 +1225,7 @@ function subFb(){
 
 /* ── Counter ── */
 (async function(){
-  try{
-    const r=await fetch('https://api.countapi.xyz/hit/rpereiradev.com/pageviews');
-    const d=await r.json();
-    const el=document.getElementById('viewCount');
-    if(!el||!d.value)return;
-    const tgt=d.value,st=Math.max(0,tgt-Math.min(tgt,80)),t0=performance.now();
-    (function tick(now){
-      const p=Math.min((now-t0)/1200,1),e=1-Math.pow(1-p,3),v=Math.round(st+(tgt-st)*e);
-      el.textContent=v>=1000?(v/1000).toFixed(1).replace('.',',')+' mil':v.toLocaleString('pt-BR');
-      if(p<1)requestAnimationFrame(tick);
-    })(t0);
-  }catch(e){}
-})();
+
 </script>
 </body>
 </html>
